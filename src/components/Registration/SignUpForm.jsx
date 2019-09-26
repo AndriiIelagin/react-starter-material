@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import validate from './validate';
+import validate from '../../common/validate';
 import validationSchema from './ValidationSchema';
 
 const initialValues = {
@@ -30,7 +30,7 @@ function SignUpForm(props) {
         <span>Login:</span>
         <input name='login' type='text' onChange={handleChange} />
       </label>
-      <div className='form-field-error'>{errors.email}</div>
+      <div className='form-field-error'>{errors.login}</div>
 
       <label className='form-field' htmlFor='email'>
         <span>Email:</span>
@@ -60,7 +60,7 @@ function SignUpForm(props) {
       </label>
       <div className='form-field-error'>{errors.consent}</div>
 
-      <button onClick={handleSubmit}>
+      <button type='submit' onClick={handleSubmit}>
         {isSubmitting ? 'Loading' : 'Sign Up'}
       </button>
     </div>
