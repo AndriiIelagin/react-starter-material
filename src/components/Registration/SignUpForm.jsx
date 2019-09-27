@@ -1,13 +1,13 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 import validate from '../../common/validate';
 import validationSchema from './ValidationSchema';
+import axios from 'axios';
 
 const initialValues = {
+  login: '',
   email: '',
-  password: '',
-  passwordConfirmation: '',
-  consent: false
+  password: ''
 };
 
 export default function SignUpFormContainer() {
@@ -22,10 +22,10 @@ export default function SignUpFormContainer() {
 }
 
 function SignUpForm(props) {
-  const { isSubmitting, errors, handleChange, handleSubmit } = props;
+  const { isSubmitting, errors, handleChange } = props;
 
   return (
-    <div className='form'>
+    <Form className='form'>
       <label className='form-field' htmlFor='login'>
         <span>Login:</span>
         <input name='login' type='text' onChange={handleChange} />
@@ -44,7 +44,7 @@ function SignUpForm(props) {
       </label>
       <div className='form-field-error'>{errors.password}</div>
 
-      <label className='form-field' htmlFor='passwordConfirmation'>
+      {/* <label className='form-field' htmlFor='passwordConfirmation'>
         <span>Confirm password:</span>
         <input
           name='passwordConfirmation'
@@ -58,12 +58,10 @@ function SignUpForm(props) {
         <span>Consent:</span>
         <input name='consent' type='checkbox' onChange={handleChange} />
       </label>
-      <div className='form-field-error'>{errors.consent}</div>
+      <div className='form-field-error'>{errors.consent}</div> */}
 
-      <button type='submit' onClick={handleSubmit}>
-        {isSubmitting ? 'Loading' : 'Sign Up'}
-      </button>
-    </div>
+      <button type='submit'>{isSubmitting ? 'Loading' : 'Sign Up'}</button>
+    </Form>
   );
 }
 
@@ -72,4 +70,26 @@ function onSubmit(values, { setSubmitting, setErrors }) {
     console.log('User has been sucessfully saved!', values);
     setSubmitting(false);
   }, 2000);
+
+  // fetch('http://localhost:3002/users')
+  // .then(function(response) {
+  //   return response.json();
+  // })
+  // .then(function(myJson) {
+  //   console.log(JSON.stringify(myJson));
+  // });
+  axios.post('http://localhost:3002/users', {...values})
+  .then(res => {
+    console.log(res);
+  });
+  // axios({
+  //   method: 'POST',
+  //   url: 'http://localhost:3002/users',
+  //   data: { ...values },
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+  //   }
+  // }).then(res => {
+  //   console.log(res);
+  // });
 }

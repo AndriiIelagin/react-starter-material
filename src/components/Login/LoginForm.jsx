@@ -23,7 +23,7 @@ function LoginForm(props) {
   const { isSubmitting, errors, handleChange, handleSubmit } = props;
 
   return (
-    <div className='form'>
+    <form className='form' onSubmit={handleSubmit}>
       <label className='form-field' htmlFor='email'>
         <span>Email:</span>
         <input name='email' type='text' onChange={handleChange} />
@@ -36,10 +36,10 @@ function LoginForm(props) {
       </label>
       <div className='form-field-error'>{errors.password}</div>
 
-      <button type='submit' onClick={handleSubmit}>
+      <button type='submit'>
         {isSubmitting ? 'Loading' : 'Login'}
       </button>
-    </div>
+    </form>
   );
 }
 
