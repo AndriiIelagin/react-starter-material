@@ -1,8 +1,10 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import axios from 'axios';
+import Button from '@material-ui/core/Button';
+
 import validate from '../../common/validate';
 import validationSchema from './ValidationSchema';
-import axios from 'axios';
 
 const initialValues = {
   login: '',
@@ -44,23 +46,7 @@ function SignUpForm(props) {
       </label>
       <div className='form-field-error'>{errors.password}</div>
 
-      {/* <label className='form-field' htmlFor='passwordConfirmation'>
-        <span>Confirm password:</span>
-        <input
-          name='passwordConfirmation'
-          type='password'
-          onChange={handleChange}
-        />
-      </label>
-      <div className='form-field-error'>{errors.passwordConfirmation}</div>
-
-      <label className='form-field' htmlFor='consent'>
-        <span>Consent:</span>
-        <input name='consent' type='checkbox' onChange={handleChange} />
-      </label>
-      <div className='form-field-error'>{errors.consent}</div> */}
-
-      <button type='submit'>{isSubmitting ? 'Loading' : 'Sign Up'}</button>
+      <Button type="submit" variant="contained" color="primary">{isSubmitting ? 'Loading' : 'Sign Up'}</Button>
     </Form>
   );
 }
@@ -70,26 +56,9 @@ function onSubmit(values, { setSubmitting, setErrors }) {
     console.log('User has been sucessfully saved!', values);
     setSubmitting(false);
   }, 2000);
-
-  // fetch('http://localhost:3002/users')
-  // .then(function(response) {
-  //   return response.json();
-  // })
-  // .then(function(myJson) {
-  //   console.log(JSON.stringify(myJson));
-  // });
+  
   axios.post('http://localhost:3002/users', {...values})
   .then(res => {
     console.log(res);
   });
-  // axios({
-  //   method: 'POST',
-  //   url: 'http://localhost:3002/users',
-  //   data: { ...values },
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-  //   }
-  // }).then(res => {
-  //   console.log(res);
-  // });
 }

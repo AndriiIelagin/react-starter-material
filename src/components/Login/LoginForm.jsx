@@ -1,5 +1,8 @@
 import React from 'react';
 import { Formik } from 'formik';
+import axios from 'axios';
+import Button from '@material-ui/core/Button';
+
 import validate from '../../common/validate';
 import validationSchema from './ValidationSchema';
 
@@ -36,9 +39,9 @@ function LoginForm(props) {
       </label>
       <div className='form-field-error'>{errors.password}</div>
 
-      <button type='submit'>
+      <Button type='submit' variant='contained' color='primary'>
         {isSubmitting ? 'Loading' : 'Login'}
-      </button>
+      </Button>
     </form>
   );
 }
@@ -48,4 +51,9 @@ function onSubmit(values, { setSubmitting, setErrors }) {
     console.log('User has been sucessfully logged in!', values);
     setSubmitting(false);
   }, 2000);
+
+  axios.post('http://localhost:3002/users', {...values})
+  .then(res => {
+    console.log(res);
+  });
 }
